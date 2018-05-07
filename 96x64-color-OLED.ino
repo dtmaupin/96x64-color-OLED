@@ -12,6 +12,8 @@
 Adafruit_Si7021 sensor = Adafruit_Si7021();  //Setup Sensor Type
 Ucglib_SSD1331_18x96x64_UNIVISION_SWSPI ucg(/*sclk=*/ 52, /*data=*/ 51, /*cd=*/ 48, /*cs=*/ 49, /*reset=*/ 50);  //Setup Display and SPI pins
 
+void (*resetFunc)(void) = 0;
+
 void setup(void)
 {
   delay(1000);
@@ -24,14 +26,14 @@ void setup(void)
 
   // wait for serial port to open
   while (!Serial) {
-    delay(10);
+    //asm volatile("nop");
   }
 
   Serial.println("Starting up sensor type: Si7021");
   
   if (!sensor.begin()) {
     Serial.println("Did not find Si7021 sensor!");
-    while (true);
+    resetFunc(); // reset
   }
   //Write fixed text to display
   //ucg.setRotate90();
@@ -52,12 +54,10 @@ void loop(void)
     ucg.setColor(0, 255, 0);                //Set color to green.  May add logic for color based on value later
     ucg.print(RH_current);                  //Update the current readint to the display
     ucg.print("%");                         //Print a % this could be moved to static text later.
-    RH_last = round(RH_current*100);        //Round last reading and set it to RH_last
-    delay(1000);                            //Delay 1 sec since the sensor updates fast enough for the display to flicker with new values
+    RH_last = RH_round;                     //Set to RH_last to rounded value
   } else {
   //RH = sensor.readHumidity();
   //float TempC=sensor.readTemperature();
-  delay(1000);  
-  
   }
+  delay(1000);                            //Delay 1 sec since the sensor updates fast enough for the display to flicker with new values
 }
