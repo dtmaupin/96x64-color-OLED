@@ -1,18 +1,8 @@
-/*
 
-  18 Feb 2014:
-    ROM Size	Font Mode
-    9928		NONE
-    10942		TRANSPARENT	(1014 Bytes)
-    11650		SOLID  (1712 Bytes)
-    12214		TRANSPARENT+SOLID
-  
-  
-*/
 
-#include "Adafruit_Si7021.h"
-#include <SPI.h>
-#include "Ucglib.h"
+#include "Adafruit_Si7021.h"    //Adafruit Si7021 V 1.0.1
+#include <SPI.h>                //Arduino SPI lib
+#include "Ucglib.h"             //Ucglib by oliver V1.5.2
 
 
   float RH_current;  //set current reading floating point
