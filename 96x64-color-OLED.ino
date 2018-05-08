@@ -21,8 +21,8 @@ void (*resetFunc)(void) = 0;
 void setup(void)
 {
   delay(1000);
-  ucg.begin(UCG_FONT_MODE_TRANSPARENT);
-  //ucg.begin(UCG_FONT_MODE_SOLID);
+  //ucg.begin(UCG_FONT_MODE_TRANSPARENT);
+  ucg.begin(UCG_FONT_MODE_SOLID);
   ucg.clearScreen();
 
   //Si2021 Section
@@ -41,11 +41,12 @@ void setup(void)
   }
   //Write fixed text to display
   //ucg.setRotate90();
-  ucg.setFont(ucg_font_ncenR10_tr);
+  ucg.setFont(ucg_font_7x14B_tf);
   ucg.setColor(0, 50, 240);
   ucg.setPrintPos(0,15);
   ucg.print("RH:   ");
   ucg.setPrintPos(0,40);
+  ucg.setFont(ucg_font_7x14B_tf);
   ucg.print("Temperature: "); 
   ucg.setColor(1, 0, 255, 255);
   ucg.setColor(0, 255, 255, 0);
@@ -64,34 +65,28 @@ void loop(void)
   Temp_round=round(Temp_current*100);           //Round current reading*100
   if(RH_round != RH_last || Temp_round != Temp_last) {
     if(RH_round != RH_last) {                 //If the rounded current reading and the last reading
-      ucg.setFont(ucg_font_ncenR10_tr);
+      ucg.setFont(ucg_font_7x14B_tf);         //Set font to 11px tall solid font
       ucg.setPrintPos(40,15);                 //Set starting postion for updating display
-      ucg.setColor(0, 0, 0);                  //Set color to black for clearing box
-      ucg.drawBox(40, 0, 38, 20);             //Draw a box from 40,0 to 38,20 solid black
-      if(RH_current < 50) {
-       ucg.setColor(0, 255, 0);                //Set color to green.  May add logic for color based on value later
+      ucg.setColor(1, 0, 0, 0);               //Set background color to black
+
+      if(RH_current < 50) {                   //If RH% is less than 50%
+       ucg.setColor(0, 0, 255, 0);            //Set font color to green.
       } else {
-       ucg.setColor(255, 0, 0);
+       ucg.setColor(0, 255, 0, 0);            //Set font color to red 
       }
       ucg.print(RH_current);                  //Update the current readint to the display
       ucg.print("%");                         //Print a % this could be moved to static text later.
       RH_last = RH_round;                     //Set to RH_last to rounded value
     }
     if(Temp_round != Temp_last) {
-      ucg.setFont(ucg_font_ncenR14_tr);
-      float TempF = Temp_current*1.8+32;
+      ucg.setFont(ucg_font_helvR14_tf);       //Set larger temp font for solid chars
+      float TempF = Temp_current*1.8+32;      //Do math to convert C to F
       ucg.setPrintPos(20,64);                 //Set starting postion for updating display
-      ucg.setColor(0, 0, 0);                  //Set color to black for clearing box
-      ucg.drawBox(20, 48, 45, 64);             //Draw a box from 40,0 to 38,20 solid black
-      ucg.setColor(255, 255, 255);                //Set color to green.  May add logic for color based on value later
-      ucg.print(TempF);                  //Update the current readint to the display
-      ucg.setFont(ucg_font_ncenR10_tr);
-      ucg.print(" F");                         //Print a C this could be moved to static text later.
-      Temp_last = Temp_round;                     //Set to Temp_last to rounded value
-    }
-    delay(5000);
-    
-  } else {
-  delay(5000);                            //Delay 1 sec since the sensor updates fast enough for the display to flicker with new values
-  }
+      ucg.setColor(0, 255, 255, 255);         //Set color to white.  May add logic for color based on value later
+      ucg.print(TempF);                       //Update the current Temp reading to the display
+      ucg.setFont(ucg_font_7x14B_tf);         //Set smaller solid font for units
+      ucg.print(" F");                        //Print a F this could be moved to static text later.
+      Temp_last = Temp_round;                 //Set to Temp_last to rounded value
+    }  
+  } 
 }
