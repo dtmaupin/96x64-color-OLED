@@ -44,9 +44,16 @@ void setup(void)
   ucg.setFont(ucg_font_ncenR10_tr);
   ucg.setColor(0, 50, 240);
   ucg.setPrintPos(0,15);
-  ucg.print("RH%: ");
+  ucg.print("RH:   ");
   ucg.setPrintPos(0,40);
   ucg.print("Temperature: "); 
+  ucg.setColor(1, 0, 255, 255);
+  ucg.setColor(0, 255, 255, 0);
+  ucg.drawGradientLine(0, 22, 94, 0);
+
+  ucg.setColor(0, 0, 255, 255);
+  ucg.setColor(1, 255, 255, 0);
+  ucg.drawGradientLine(0, 45, 94, 0);
 }
 
 void loop(void)
@@ -61,7 +68,11 @@ void loop(void)
       ucg.setPrintPos(40,15);                 //Set starting postion for updating display
       ucg.setColor(0, 0, 0);                  //Set color to black for clearing box
       ucg.drawBox(40, 0, 38, 20);             //Draw a box from 40,0 to 38,20 solid black
-      ucg.setColor(0, 255, 0);                //Set color to green.  May add logic for color based on value later
+      if(RH_current < 50) {
+       ucg.setColor(0, 255, 0);                //Set color to green.  May add logic for color based on value later
+      } else {
+       ucg.setColor(255, 0, 0);
+      }
       ucg.print(RH_current);                  //Update the current readint to the display
       ucg.print("%");                         //Print a % this could be moved to static text later.
       RH_last = RH_round;                     //Set to RH_last to rounded value
