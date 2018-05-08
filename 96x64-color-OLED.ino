@@ -77,10 +77,9 @@ void loop(void)
       ucg.print(" C");                         //Print a C this could be moved to static text later.
       Temp_last = Temp_round;                     //Set to Temp_last to rounded value
     }
-    delay(1000);
+    delay(5000);
     
   } else {
-  delay(1000);                            //Delay 1 sec since the sensor updates fast enough for the display to flicker with new values
+  delay(5000);                            //Delay 1 sec since the sensor updates fast enough for the display to flicker with new values
   }
-  //delay(1000);                            //Delay 1 sec since the sensor updates fast enough for the display to flicker with new values
 }
