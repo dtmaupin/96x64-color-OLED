@@ -74,14 +74,12 @@ void loop(void)
       ucg.setColor(255, 255, 255);                //Set color to green.  May add logic for color based on value later
       ucg.print(Temp_current);                  //Update the current readint to the display
       ucg.setFont(ucg_font_ncenR10_tr);
-      ucg.print(" C");                         //Print a % this could be moved to static text later.
-      Temp_last = Temp_round;                     //Set to RH_last to rounded value
+      ucg.print(" C");                         //Print a C this could be moved to static text later.
+      Temp_last = Temp_round;                     //Set to Temp_last to rounded value
     }
     delay(1000);
     
   } else {
-  //RH = sensor.readHumidity();
-  //float TempC=sensor.readTemperature();
   delay(1000);                            //Delay 1 sec since the sensor updates fast enough for the display to flicker with new values
   }
   //delay(1000);                            //Delay 1 sec since the sensor updates fast enough for the display to flicker with new values
