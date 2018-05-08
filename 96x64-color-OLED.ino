@@ -79,7 +79,7 @@ void loop(void)
       RH_last = RH_round;                     //Set to RH_last to rounded value
     }
     if(Temp_round != Temp_last) {
-      ucg.setFont(ucg_font_helvR14_tf);       //Set larger temp font for solid chars
+      ucg.setFont(ucg_font_10x20_tf);       //Set larger temp font for solid chars
       float TempF = Temp_current*1.8+32;      //Do math to convert C to F
       ucg.setPrintPos(20,64);                 //Set starting postion for updating display
       ucg.setColor(0, 255, 255, 255);         //Set color to white.  May add logic for color based on value later
