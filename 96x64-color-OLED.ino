@@ -46,7 +46,7 @@ void setup(void)
   ucg.setPrintPos(0,15);
   ucg.print("RH%: ");
   ucg.setPrintPos(0,40);
-  ucg.print("Temp C: "); 
+  ucg.print("Temperature: "); 
 }
 
 void loop(void)
