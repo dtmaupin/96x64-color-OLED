@@ -43,12 +43,12 @@ void setup(void)
   }
   //Write fixed text to display
   //ucg.setRotate90();
-  ucg.setFont(ucg_font_7x14B_tf);
+  ucg.setFont(ucg_font_7x14B_mr);
   ucg.setColor(0, 50, 240);
   ucg.setPrintPos(0,15);
   ucg.print("RH:   ");
   ucg.setPrintPos(0,40);
-  ucg.setFont(ucg_font_7x14B_tf);
+  ucg.setFont(ucg_font_7x14B_mr);
   ucg.print("Temperature: "); 
   ucg.setColor(1, 0, 255, 255);
   ucg.setColor(0, 255, 255, 0);
@@ -68,7 +68,7 @@ void loop(void)
   
   if(RH_round != RH_last || Temp_round != Temp_last) {
     if(RH_round != RH_last) {                 //If the rounded current reading and the last reading
-      ucg.setFont(ucg_font_7x14B_tf);         //Set font to 11px tall solid font
+      ucg.setFont(ucg_font_7x14B_mr);         //Set font to 11px tall solid font
       ucg.setPrintPos(40,15);                 //Set starting postion for updating display
       ucg.setColor(1, 0, 0, 0);               //Set background color to black
 
@@ -78,19 +78,22 @@ void loop(void)
        ucg.setColor(0, 255, 0, 0);            //Set font color to red 
       }
       char buffer[128];
-      sprintf(buffer, "%7.2f%%", RH_current);
-      Serial.println(buffer);
+      sprintf(buffer, "7.2f%%", RH_current);
+      //Serial.println(buffer);
       ucg.drawString(40,15, 0, buffer);
       //ucg.print("%");                         //Print a % this could be moved to static text later.
       RH_last = RH_round;                     //Set to RH_last to rounded value
     }
     if(Temp_round != Temp_last) {
-      ucg.setFont(ucg_font_10x20_tf);       //Set larger temp font for solid chars
-      double TempF = Temp_current*1.8+32;      //Do math to convert C to F
-      ucg.setPrintPos(20,64);                 //Set starting postion for updating display
+      ucg.setFont(ucg_font_10x20_mr);       //Set larger temp font for solid chars
+      float TempF = Temp_current*1.8+32;      //Do math to convert C to F
+      ucg.setPrintPos(0,64);                 //Set starting postion for updating display
       ucg.setColor(0, 255, 255, 255);         //Set color to white.  May add logic for color based on value later
-      ucg.print(TempF);                       //Update the current Temp reading to the display
-      ucg.setFont(ucg_font_7x14B_tf);         //Set smaller solid font for units
+      char buffer[128];
+      sprintf(buffer, "%7.2f", Temp_current);
+      Serial.println(buffer);
+      ucg.print(buffer);                       //Update the current Temp reading to the display
+      ucg.setFont(ucg_font_7x14B_mr);         //Set smaller solid font for units
       ucg.print(" F");                        //Print a F this could be moved to static text later.
       Temp_last = Temp_round;                 //Set to Temp_last to rounded value
     }  
