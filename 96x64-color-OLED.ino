@@ -59,11 +59,14 @@ void setup(void)
 
 void loop(void)
 {
-  float RH_current = sensor.readHumidity(); //Read sensor data as float
+  double RH_current = sensor.readHumidity(); //Read sensor data as float
   RH_round=round(RH_current*100);           //Round current reading*100
-  float Temp_current = sensor.readTemperature(); //Read sensor data as float
+  double Temp_current = sensor.readTemperature(); //Read sensor data as float
   Temp_round=round(Temp_current*100);           //Round current reading*100
+  
   if(RH_round != RH_last || Temp_round != Temp_last) {
+      Serial.print("Humidity:    "); Serial.print(sensor.readHumidity(), 2);
+      Serial.print("\tTemperature: "); Serial.println(sensor.readTemperature(), 2);
     if(RH_round != RH_last) {                 //If the rounded current reading and the last reading
       ucg.setFont(ucg_font_7x14B_tf);         //Set font to 11px tall solid font
       ucg.setPrintPos(40,15);                 //Set starting postion for updating display
@@ -74,13 +77,13 @@ void loop(void)
       } else {
        ucg.setColor(0, 255, 0, 0);            //Set font color to red 
       }
-      ucg.print(RH_current);                  //Update the current readint to the display
+      ucg.print(RH_current+1.88);                  //Update the current readint to the display
       ucg.print("%");                         //Print a % this could be moved to static text later.
       RH_last = RH_round;                     //Set to RH_last to rounded value
     }
     if(Temp_round != Temp_last) {
       ucg.setFont(ucg_font_10x20_tf);       //Set larger temp font for solid chars
-      float TempF = Temp_current*1.8+32;      //Do math to convert C to F
+      double TempF = Temp_current*1.8+32;      //Do math to convert C to F
       ucg.setPrintPos(20,64);                 //Set starting postion for updating display
       ucg.setColor(0, 255, 255, 255);         //Set color to white.  May add logic for color based on value later
       ucg.print(TempF);                       //Update the current Temp reading to the display
