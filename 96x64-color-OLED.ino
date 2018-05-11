@@ -1,3 +1,5 @@
+#include <PrintEx.h>
+
 
 
 #include "Adafruit_Si7021.h"    //Adafruit Si7021 V 1.0.1
@@ -65,8 +67,6 @@ void loop(void)
   Temp_round=round(Temp_current*100);           //Round current reading*100
   
   if(RH_round != RH_last || Temp_round != Temp_last) {
-      Serial.print("Humidity:    "); Serial.print(sensor.readHumidity(), 2);
-      Serial.print("\tTemperature: "); Serial.println(sensor.readTemperature(), 2);
     if(RH_round != RH_last) {                 //If the rounded current reading and the last reading
       ucg.setFont(ucg_font_7x14B_tf);         //Set font to 11px tall solid font
       ucg.setPrintPos(40,15);                 //Set starting postion for updating display
@@ -77,8 +77,11 @@ void loop(void)
       } else {
        ucg.setColor(0, 255, 0, 0);            //Set font color to red 
       }
-      ucg.print(RH_current+1.88);                  //Update the current readint to the display
-      ucg.print("%");                         //Print a % this could be moved to static text later.
+      char buffer[128];
+      sprintf(buffer, "%7.2f%%", RH_current);
+      Serial.println(buffer);
+      ucg.drawString(40,15, 0, buffer);
+      //ucg.print("%");                         //Print a % this could be moved to static text later.
       RH_last = RH_round;                     //Set to RH_last to rounded value
     }
     if(Temp_round != Temp_last) {
